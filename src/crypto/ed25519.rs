@@ -56,9 +56,9 @@ pub fn verify(message: &[u8], public_key: &[u8], signature: &[u8]) -> bool {
     println!("len(r):         {:?}", r.to_bytes().as_ref().len());
     println!("len(signature): {:?}", signature.len());
     let zip_object = r.to_bytes()
-        .clone()
+        .as_ref()
         .iter()
-        .zip(signature.iter());
+        .zip(signature.iter()).clone();
     println!("zip_object: {:?}", zip_object);
     let num_bytes = zip_object
         .fold(0, |acc, (x, y)| acc | (x ^ y));
