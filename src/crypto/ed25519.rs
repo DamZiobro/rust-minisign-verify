@@ -50,12 +50,12 @@ pub fn verify(message: &[u8], public_key: &[u8], signature: &[u8]) -> bool {
     sc_reduce(&mut hash);
 
     let r = GeP2::double_scalarmult_vartime(hash.as_ref(), a, &signature[32..64]);
-    println!("verify -> return TRUE");
-    r.to_bytes()
+    println!("verify -> return TRUE -> {:?}", r);
+    let num_bytes = r.to_bytes()
         .as_ref()
         .iter()
         .zip(signature.iter())
         .fold(0, |acc, (x, y)| acc | (x ^ y))
-        == 0
 
+    num_bytes == 0
 }
