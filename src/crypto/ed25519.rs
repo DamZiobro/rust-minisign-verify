@@ -58,7 +58,7 @@ pub fn verify(message: &[u8], public_key: &[u8], signature: &[u8]) -> bool {
     let num_bytes = r.to_bytes()
         .as_ref()
         .iter()
-        .zip(signature.iter()).clone();
+        .zip(signature.iter())
         .fold(0, |acc, (x, y)| acc | (x ^ y));
 
     println!("num_bytes: {:?}", num_bytes);
