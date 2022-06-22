@@ -229,6 +229,8 @@ impl PublicKey {
             return Err(Error::InvalidSignature);
         }
         let trusted_comment_bin = signature.trusted_comment().as_bytes();
+        println!("signature.signature.len: {:?}", signature.signature.len())
+        println!("trusted_comment_bin: {:?}", trusted_comment_bin.len())
         let mut global = Vec::with_capacity(signature.signature.len() + trusted_comment_bin.len());
         global.extend_from_slice(&signature.signature[..]);
         global.extend_from_slice(trusted_comment_bin);
