@@ -26,16 +26,19 @@ fn check_s_lt_l(s: &[u8]) -> bool {
 
 pub fn verify(message: &[u8], public_key: &[u8], signature: &[u8]) -> bool {
     if check_s_lt_l(&signature[32..64]) || is_identity(public_key) {
+        println!("verify -> return false 1");
         return false;
     }
 
     let a = match GeP3::from_bytes_negate_vartime(public_key) {
         Some(g) => g,
         None => {
+            println!("verify -> return false 2");
             return false;
         }
     };
     if public_key.iter().fold(0, |acc, x| acc | x) == 0 {
+        println!("verify -> return false 3");
         return false;
     }
 
@@ -53,4 +56,6 @@ pub fn verify(message: &[u8], public_key: &[u8], signature: &[u8]) -> bool {
         .zip(signature.iter())
         .fold(0, |acc, (x, y)| acc | (x ^ y))
         == 0
+
+    println!("verify -> return TRUE");
 }
