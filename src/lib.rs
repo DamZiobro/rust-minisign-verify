@@ -224,6 +224,7 @@ impl PublicKey {
         } else {
             bin
         };
+        println!("DAMIAN - 1st verification: key: {:?}; signature: {:?}", &self.key, &signature.signature);
         if !ed25519::verify(bin, &self.key, &signature.signature) {
             return Err(Error::InvalidSignature);
         }
@@ -231,6 +232,7 @@ impl PublicKey {
         let mut global = Vec::with_capacity(signature.signature.len() + trusted_comment_bin.len());
         global.extend_from_slice(&signature.signature[..]);
         global.extend_from_slice(trusted_comment_bin);
+        println!("DAMIAN - 2nd verification: key: {:?}; glabal_signature: {:?}", &self.key, &signature.global_signature);
         if !ed25519::verify(&global, &self.key, &signature.global_signature) {
             return Err(Error::InvalidSignature);
         }
